@@ -66,4 +66,3 @@ server.on('listening', () => {
 
 //le serveur écoute le port qui est définit dans la const port*
 server.listen(port);
-
