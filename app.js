@@ -1,6 +1,11 @@
 //const pour utiliser Express
 const express = require('express');
+
+const req = require('express/lib/request');
 const res = require('express/lib/response');
+
+//const pour utiliser body-parser
+const bodyParser = require('body-parser');
 
 //const pour utiliser Mongoose
 const mongoose = require('mongoose');
@@ -10,6 +15,7 @@ const app = express();
 //express prend toutes les requêtes et met à disposition leur body* (bodyParser)
 app.use(express.json());
 
+/*
 //le PORT 3000 du backend et le PORT 4200 du frontend pourront communiquer entre eux afin d'éviter les erreurs CORS
 app.use((req, res, next)) => {
 
@@ -23,6 +29,7 @@ app.use((req, res, next)) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 }
+*/
 
 //intercepte les requêtes POST
 app.post('/api/stuff', (req, res, next) => {
