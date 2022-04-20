@@ -28,5 +28,5 @@ userSchema.plugin(mongooseUniqueValidator);
 //plugin pour purifier les champs du model afin de les enregistrer après dans MongoDB
 userSchema.plugin(mongooseSanitizerPlugin);
 
-//exportation de userSchema 
-module.exports = mongoose.model(userSchema);
+//exportation de userSchema afin d'utiliser User
+module.exports = mongoose.model('User', userSchema);
