@@ -27,6 +27,9 @@ app.use((req, res, next)) => {
   
   //ce header permet d'envoyer des requêtes avec les méthodes mentionnées
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  
+  //ce header permet d'autoriser le serveur à fournir des scripts pour la page
+  res.setHeader('Content-Security-Policy', "default-src 'self'");
   next();
 }
 */
