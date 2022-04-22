@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/ReyRomain/RomainRey_6_15042022#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.3",
-    "mongoose": "^6.3.0"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.0",
+    "mongoose-sanitizer-plugin": "^1.1.0",
+    "mongoose-type-email": "^1.1.2",
+    "mongoose-unique-validator": "^3.0.0"
   }
 }
