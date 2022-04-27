@@ -1,4 +1,6 @@
-//récupération de jsonwebtoken
+/**
+ * récupération de jsonwebtoken
+ */
 const jsonwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {

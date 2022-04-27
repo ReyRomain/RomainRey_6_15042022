@@ -51,7 +51,9 @@ const errorHandler = error => {
   }
 };
 
-//création d'un serveur avec Express en utilisant app pour les requêtes et réponses
+/**
+ * création d'un serveur avec Express en utilisant app pour les requêtes et réponses
+ */
 const server = http.createServer(app);
 
 /**
