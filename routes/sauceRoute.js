@@ -20,10 +20,15 @@ const multer = require("../middlewares/multer-config");
  */
 const router = express.Router();
 
+/**
+ * renvoie un tableau de toutes les sauces de la base de données
+ */
+ router.get('/sauces');
 
-
-
-
+ /**
+  * Renvoie la sauce avec l’_id fourni.
+  */
+ router.get('/sauces/:id');
 
 
 
