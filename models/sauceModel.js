@@ -1,7 +1,11 @@
-//création d'un model d'user* avec mongoose
+/**
+ * création d'un model de sauce* avec mongoose
+ */
 const mongoose = require('mongoose');
 
-//vérification avec des plugins de validation
+/**
+ * vérification avec des plugins de validation
+ */
 const mongooseSanitizerPlugin = require('mongoose-sanitizer-plugin');
 
 /**
@@ -14,77 +18,83 @@ const mongooseSanitizerPlugin = require('mongoose-sanitizer-plugin');
      */
     userId: {
         type: String,
-        require: true
+        required: true
     },
 
     /**
      * nom de la sauce
      */
     name: {
-
+        type: String,
+        required: true
     },
 
     /**
      * fabricant de la sauce
      */
     manufacturer: {
-
+        type: String,
+        required: true
     },
 
     /**
      * description de la sauce
      */
     description: {
-
+        type: String,
+        required: true
     },
 
     /**
      * le principal ingrédient épicé de la sauce
      */
     mainPepper: {
-
+        type: String,
+        required: true
     },
 
     /**
      * l'URL de l'image de la sauce téléchargée par l'utilisateur
      */
     imageUrl: {
-
+        type: String,
+        required: true
     },
 
     /**
      * nombre entre 1 et 10 décrivant la sauce
      */
     heat: {
-
+        type: Number,
+        required: true
     },
 
     /**
      * nombre d'utilisateurs qui aiment la sauce
      */
     likes: {
-
+        type: Number,
     },
 
     /**
      * nombre d'utilisateurs qui n'aiment pas la sauce
      */
     dislikes: {
-
+        type: Number,
     },
 
     /**
-     * tableau des identifiants des utilisateurs qui ont aimé la sauce
+     * tableau des identifiants des utilisateurs qui ont aimé (=liked) la sauce
      */
     usersLiked: {
-
+        type: ["String <userId>"],
     }
 
     /**
-     * tableau des identifiants des utilisateurs qui n'ont pas aimé la sauce
+     * tableau des identifiants des utilisateurs qui n'ont pas aimé (=disliked) la sauce
      */
     usersDisliked: {
-
+        type: ["String <userId>"],
     }
 });
 
