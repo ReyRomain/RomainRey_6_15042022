@@ -7,8 +7,12 @@ const express = require('express');
 //const pour utiliser Mongoose
 const mongoose = require('mongoose');
 const userRoute = require("./routes/userRoute");
+const sauceRoute = require("./routes/sauceRoute");
+const { default: helmet } = require('helmet');
 
 const app = express();
+
+app.use(helmet());
 
 //express prend toutes les requêtes et met à disposition leur body* (bodyParser)
 app.use(express.json());
@@ -94,5 +98,6 @@ mongoose.connect('mongodb+srv://RomainRey:Romain95340@clusterpiiquante.wqzfo.mon
 // });
 
 app.use("/api/auth", userRoute);
+app.use("/api/sauces", sauceRoute);
 
 module.exports = app;

@@ -24,12 +24,12 @@ const router = express.Router();
 /**
  * renvoie un tableau de toutes les sauces de la base de données
  */
- router.get('/sauces', getAllSauces);
+ router.get('/', getAllSauces);
 
  /**
   * Renvoie la sauce avec l’_id fourni.
   */
- router.get('/sauces/:id', getSauce);
+ router.get('/:id', getSauce);
 
 
 

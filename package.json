@@ -20,6 +20,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.3",
+    "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.0",
     "mongoose-sanitizer-plugin": "^1.1.0",
