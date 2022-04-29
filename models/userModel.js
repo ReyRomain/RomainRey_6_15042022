@@ -9,7 +9,7 @@ const mongooseSanitizerPlugin = require('mongoose-sanitizer-plugin');
 /**
  * création du schéma de données pour user*
  */
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
 
     /**
      * l'adresse email unique

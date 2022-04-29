@@ -11,7 +11,7 @@ const mongooseSanitizerPlugin = require('mongoose-sanitizer-plugin');
 /**
  * création du schéma de données pour les sauces*
  */
- const sauceSchema = mongoose.Schema({
+ const sauceSchema = new mongoose.Schema({
 
     /**
      * l'identifiant MongoDB unique de l'utilisateur qui a créé la sauce
@@ -87,14 +87,14 @@ const mongooseSanitizerPlugin = require('mongoose-sanitizer-plugin');
      * tableau des identifiants des utilisateurs qui ont aimé (=liked) la sauce
      */
     usersLiked: {
-        type: ["String <userId>"],
-    }
+        type: Array,
+    },
 
     /**
      * tableau des identifiants des utilisateurs qui n'ont pas aimé (=disliked) la sauce
      */
     usersDisliked: {
-        type: ["String <userId>"],
+        type: Array
     }
 });
 
