@@ -4,7 +4,7 @@
  * utilisation de Express
  */
 const express = require('express');
-const { getAllSauces, getSauce } = require('../controllers/sauceCtrl');
+const { getAllSauces, getSauce, createSauce, modifySauce } = require('../controllers/sauceCtrl');
 
 /**
  * importation du middleware auth pour sécuriser les routes
@@ -24,13 +24,22 @@ const router = express.Router();
 /**
  * renvoie un tableau de toutes les sauces de la base de données
  */
- router.get('/', getAllSauces);
+router.get('/', getAllSauces);
 
- /**
-  * Renvoie la sauce avec l’_id fourni.
-  */
- router.get('/:id', getSauce);
+/**
+* Renvoie la sauce avec l’_id fourni.
+*/
+router.get('/:id', getSauce);
 
+/**
+ * route qui permet de créer une sauce
+ */
+router.post('/', multer, createSauce);
+
+/**
+ * route qui permet de modifier une sauce
+ */
+router.put('/:id', multer, modifySauce);
 
 
 
