@@ -3,6 +3,23 @@
  */
 const Sauce = require('../models/sauceModel.js');
 
+
+
+/**
+ * création d'une sauce
+ */
+function createSauce (req, res, next) {
+    const sauceObject = JSON.parse(req.body.sauce);
+    delete sauceObject._id;
+    const sauce = new Sauce({
+        ...sauceObject,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    });
+    sauce.save()
+      .then(() => res.status(201).json({ message: 'La sauce a bien été ajoutée.'}))
+      .catch(error => res.status(400).json({ error }));
+}
+
 async function getAllSauces (req, res, next) {
 
     //on utilise find pour récupérer le tableau des sauces dans la base de données
@@ -29,6 +46,7 @@ function getSauce (req, res, next) {
 
 
 module.exports = {
-   getAllSauces,
-   getSauce
+    createSauce,
+    getAllSauces,
+    getSauce
 }
