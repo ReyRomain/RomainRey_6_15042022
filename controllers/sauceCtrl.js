@@ -20,6 +20,15 @@ function createSauce (req, res, next) {
       .catch(error => res.status(400).json({ error }));
 }
 
+/**
+ * modification d'une sauce
+ */
+function modifySauce (req, res, next) {
+    Sauce.updateOne({ _id: req.params.id}, { ...req.body, _id: req.params.id })
+      .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
+      .catch(error => res.status(400).json({ error }));
+}
+
 async function getAllSauces (req, res, next) {
 
     //on utilise find pour récupérer le tableau des sauces dans la base de données
@@ -47,6 +56,7 @@ function getSauce (req, res, next) {
 
 module.exports = {
     createSauce,
+    modifySauce,
     getAllSauces,
     getSauce
 }
