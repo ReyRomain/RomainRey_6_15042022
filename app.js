@@ -1,6 +1,9 @@
 //const pour utiliser Express
 const express = require('express');
 
+//plugin qui permet de donner accès au chemin de notre système de fichier
+const path = require('path');
+
 // const req = require('express/lib/request');
 // const res = require('express/lib/response');
 
@@ -16,6 +19,9 @@ app.use(helmet());
 
 //express prend toutes les requêtes et met à disposition leur body* (bodyParser)
 app.use(express.json());
+
+//middleware qui permet de charger les fichiers qui sont dans le dossier images
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 //le PORT 3000 du backend et le PORT 4200 du frontend pourront communiquer entre eux afin d'éviter les erreurs CORS
