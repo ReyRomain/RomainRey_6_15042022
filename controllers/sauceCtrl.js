@@ -29,6 +29,9 @@ function modifySauce (req, res, next) {
       .catch(error => res.status(400).json({ error }));
 }
 
+/**
+ * récupération du tableau des sauces
+ */
 async function getAllSauces (req, res, next) {
 
     //on utilise find pour récupérer le tableau des sauces dans la base de données
@@ -41,6 +44,9 @@ async function getAllSauces (req, res, next) {
     }
 }
 
+/**
+ * récupération d'une sauce précise
+ */
 function getSauce (req, res, next) {
 
     //on utilise findOne pour récupérer une sauce
