@@ -4,7 +4,7 @@
  * utilisation de Express
  */
 const express = require('express');
-const { getAllSauces, getSauce, createSauce, modifySauce } = require('../controllers/sauceCtrl');
+const { getAllSauces, getSauce, createSauce, modifySauce, deleteSauce } = require('../controllers/sauceCtrl');
 
 /**
  * importation du middleware auth pour sécuriser les routes
@@ -41,6 +41,10 @@ router.post('/', multer, createSauce);
  */
 router.put('/:id', multer, modifySauce);
 
+/**
+ * route qui permet de supprimer une sauce
+ */
+router.delete('/:id', deleteSauce);
 
 
 /**
