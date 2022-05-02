@@ -30,6 +30,15 @@ function modifySauce (req, res, next) {
 }
 
 /**
+ * supprime une sauce
+ */
+function deleteSauce (req, res, next) {
+    Sauce.deleteOne({ _id: req.params.id })
+      .then(() => res.status(200).json({ message: 'La sauce à été supprimée'}))
+      .catch(error => res.status(400).json({ error }));
+}
+
+/**
  * récupération du tableau des sauces
  */
 async function getAllSauces (req, res, next) {
@@ -63,6 +72,7 @@ function getSauce (req, res, next) {
 module.exports = {
     createSauce,
     modifySauce,
+    deleteSauce,
     getAllSauces,
     getSauce
 }
