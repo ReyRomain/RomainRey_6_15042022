@@ -3,6 +3,10 @@
  */
 const Sauce = require('../models/sauceModel.js');
 
+/**
+ * permet de récupérer le module 'file system' de Node pour télécharger et modifier les images
+ */
+const fs = require('fs');
 
 
 /**
@@ -24,7 +28,12 @@ function createSauce (req, res, next) {
  * modification d'une sauce
  */
 function modifySauce (req, res, next) {
-    Sauce.updateOne({ _id: req.params.id}, { ...req.body, _id: req.params.id })
+    const sauceObject = req.file ?
+        {
+            ...JSON.parse(req.body.sauce),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : { ...req.body };
+    Sauce.updateOne({ _id: req.params.id}, { ...sauceObject, _id: req.params.id })
       .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
       .catch(error => res.status(400).json({ error }));
 }
