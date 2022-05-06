@@ -3,6 +3,8 @@
  */
 const bcrypt = require('bcrypt');
 
+const jwt = require('jsonwebtoken');
+
 /**
  * récupération du schéma User de mongoose
  */
@@ -35,7 +37,11 @@ function login(req,res, next){
                 //sinon on renvoie son userId et un token
                 res.status(200).json({
                     userId: user._id,
-                    token: 'TOKEN'
+                    token:  jwt.sign(
+                        { userId: user._id },
+                        process.env.JWT_PASS,
+                        { expiresIn: '24h' }
+                      )
                 });
             })
             .catch(error => res.status(500).json({ error }));

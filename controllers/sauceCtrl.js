@@ -77,11 +77,21 @@ function getSauce (req, res, next) {
     .catch(error => res.status(404).json({ error }));
 }
 
+function updateLikes(req, res, next){
+    // { userId: String,
+        // like: Number }
+
+    const { userId,  like } = req.body;
+            
+        
+}
+
 
 module.exports = {
     createSauce,
-    modifySauce,
     deleteSauce,
     getAllSauces,
-    getSauce
+    getSauce,
+    modifySauce,
+    updateLikes
 }
