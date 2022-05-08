@@ -24,12 +24,12 @@ const router = express.Router();
 /**
  * renvoie un tableau de toutes les sauces de la base de données
  */
-router.get('/', auth, getAllSauces);
+router.get('/', getAllSauces);
 
 /**
 * Renvoie la sauce avec l’_id fourni.
 */
-router.get('/:id', auth, getSauce);
+router.get('/:id', getSauce);
 
 /**
  * route qui permet de créer une sauce
