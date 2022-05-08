@@ -24,29 +24,32 @@ const router = express.Router();
 /**
  * renvoie un tableau de toutes les sauces de la base de données
  */
-router.get('/', getAllSauces);
+router.get('/', auth, getAllSauces);
 
 /**
 * Renvoie la sauce avec l’_id fourni.
 */
-router.get('/:id', getSauce);
+router.get('/:id', auth, getSauce);
 
 /**
  * route qui permet de créer une sauce
  */
-router.post('/', multer, createSauce);
+router.post('/', auth, multer, createSauce);
 
 /**
  * route qui permet de modifier une sauce
  */
-router.put('/:id', multer, modifySauce);
+router.put('/:id', auth, multer, modifySauce);
 
 /**
  * route qui permet de supprimer une sauce
  */
-router.delete('/:id', deleteSauce);
+router.delete('/:id', auth, deleteSauce);
 
-router.post("/:id/like", updateLikes )
+/**
+ * route qui permet d'afficher les likes
+ */
+router.post("/:id/like", auth, updateLikes )
 
 
 /**
