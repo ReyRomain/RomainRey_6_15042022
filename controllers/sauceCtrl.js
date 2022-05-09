@@ -82,6 +82,24 @@ function updateLikes(req, res, next){
         // like: Number }
 
     const { userId,  like } = req.body;
+
+    if (like === 1) {
+        Sauce.updateOne(
+            {_id: req.params.id},
+            {
+               $push: { usersLiked: userId },
+               $inc: { likes: like }
+            }
+        )
+        .then(() => res.status(200).json({ message: "Like ajouté"}))
+        .catch((error) => res.status(400).json({ error }));
+    }
+
+    if (like === -1) {
+        Sauce.updateOne({
+
+        })
+    }
             
         
 }
