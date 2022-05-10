@@ -88,7 +88,7 @@ function updateLikes(req, res, next){
             {_id: req.params.id},
             {
                $push: { usersLiked: userId },
-               $inc: { likes: like }
+               $inc:  { likes: like }
             }
         )
         .then(() => res.status(200).json({ message: "Like ajouté"}))
@@ -96,12 +96,16 @@ function updateLikes(req, res, next){
     }
 
     if (like === -1) {
-        Sauce.updateOne({
-
-        })
+        Sauce.updateOne(
+            {_id: req.params.id},
+            {
+                $push: { usersDisliked: userId },
+                $inc:  { dislikes: like }
+            }
+        )
+        .then(() => res.status(200).json({ message: "Dislike ajouté"}))
+        .catch((error) => res.status(400).json({ error }));
     }
-            
-        
 }
 
 
