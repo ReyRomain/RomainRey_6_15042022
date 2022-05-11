@@ -4,9 +4,6 @@ const express = require('express');
 //plugin qui permet de donner accès au chemin de notre système de fichier
 const path = require('path');
 
-// const req = require('express/lib/request');
-// const res = require('express/lib/response');
-
 //const pour utiliser Mongoose
 const mongoose = require('mongoose');
 const userRoute = require("./routes/userRoute");
@@ -15,7 +12,7 @@ const { default: helmet } = require('helmet');
 
 const app = express();
 
-
+//le PORT 3000 du backend et le PORT 4200 du frontend pourront communiquer entre eux afin d'éviter les erreurs CORS
 if (process.env.MODE === "DEV") {
   app.use((req, res, next) => {
 
@@ -42,44 +39,6 @@ app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
-//le PORT 3000 du backend et le PORT 4200 du frontend pourront communiquer entre eux afin d'éviter les erreurs CORS
-
-
-
-//intercepte les requêtes POST
-// app.post('/api/stuff', (req, res, next) => {
-
-//   //le contenu du corps de la requête
-//   console.log(req.body);
-  
-//   //création de ressource avec le code 201
-//   res.status(201).json({
-//     message: 'Objet créé !'
-//   });
-// });
-
-// app.get('/api/stuff', (req, res, next) => {
-//   const stuff = [
-//     {
-//       _id: 'oeihfzeoi',
-//       title: 'Mon premier objet',
-//       description: 'Les infos de mon premier objet',
-//       imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
-//       price: 4900,
-//       userId: 'qsomihvqios',
-//     },
-//     {
-//       _id: 'oeihfzeomoihi',
-//       title: 'Mon deuxième objet',
-//       description: 'Les infos de mon deuxième objet',
-//       imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
-//       price: 2900,
-//       userId: 'qsomihvqios',
-//     },
-//   ];
-//   res.status(200).json(stuff);
-// });
-
 /**
  * connexion à MongoDB
  */
@@ -88,24 +47,6 @@ mongoose.connect(process.env.DB_CONNECT,
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-// app.use((req, res, next) => {
-//   console.log('Requête reçue !');
-//   next();
-// });
-
-// app.use((req, res, next) => {
-//   res.status(201);
-//   next();
-// });
-
-// app.use((req, res, next) => {
-//   res.json({ message: 'Votre requête a bien été reçue !' });
-//   next();
-// });
-
-// app.use((req, res, next) => {
-//   console.log('Réponse envoyée avec succès !');
-// });
 
 app.use("/api/auth", userRoute);
 app.use("/api/sauces", sauceRoute);
