@@ -83,6 +83,11 @@ function updateLikes(req, res, next){
 
     const { userId,  like } = req.body;
 
+    /**
+     * récupération de l'id d'une sauce
+     */
+    const sauceId = req.params.id
+
     if (like === 1) {
         Sauce.updateOne(
             {_id: req.params.id},
@@ -105,6 +110,29 @@ function updateLikes(req, res, next){
         )
         .then(() => res.status(200).json({ message: "Dislike ajouté"}))
         .catch((error) => res.status(400).json({ error }));
+    }
+
+    /**
+     * annuler un like ou un dislike
+     */
+    if (like === 0) {
+        Sauce.findOne({ _id: sauceId })
+            .then((sauce) => {
+                /**
+                 * annule un like
+                 */
+                if (sauce.usersLiked.includes(userId)) {
+                    Sauce.updateOne(
+                        { _id: sauceId },
+                        {
+                            $pull: { usersLiked: userId },
+                            $inc:  { likes: -1 }
+                        }
+                    )
+                    .then(() => res.status(200).json({ message: "Like retiré"}))
+                    .catch((error) => res.status(400).json({ error }));
+                }
+            })
     }
 }
 
