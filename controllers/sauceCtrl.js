@@ -148,7 +148,7 @@ function updateLikes(req, res, next){
                 }
 
             })
-            .catch((error) => res.status(400).json({ error }))
+            .catch((error) => res.status(404).json({ error }))
     }
 }
 
