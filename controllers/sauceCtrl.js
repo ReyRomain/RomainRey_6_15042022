@@ -105,7 +105,7 @@ function updateLikes(req, res, next){
             {_id: req.params.id},
             {
                 $push: { usersDisliked: userId },
-                $inc:  { dislikes: like }
+                $inc:  { dislikes: +1 }
             }
         )
         .then(() => res.status(200).json({ message: "Dislike ajouté"}))
