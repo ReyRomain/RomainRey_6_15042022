@@ -7,10 +7,23 @@ const Sauce = require('../models/sauceModel.js');
  * permet de récupérer le module 'file system' de Node pour télécharger et modifier les images
  */
 const fs = require('fs');
-
+const Module = require('module');
 
 /**
- * création d'une sauce
+ * Création d'une sauce
+ *
+ * @param   {Object}    req   [req description]
+ * @param   {Object}    req.body
+ * @param   {String}    req.body.sauce
+ * @param   {Module}    req.protocol
+ * @param   {Function}  req.get
+ * @param   {Object}    req.file
+ * @param   {File}      req.file.filename
+ * 
+ * @param   {Object}    res   [res description]
+ * @param   {Function}  next  [next description]
+ *
+ * @return  {Object}        [return description]
  */
 function createSauce(req, res, next) {
     const sauceObject = JSON.parse(req.body.sauce);
@@ -25,7 +38,19 @@ function createSauce(req, res, next) {
 }
 
 /**
- * modification d'une sauce
+ * Modification d'une sauce
+ *
+ * @param   {Object}    req   [req description]
+ * @param   {Object}    req.file
+ * @param   {Object}    req.body
+ * @param   {String}    req.body.sauce
+ * @param   {}          req.protocol
+ * @param   {}          req.get
+ * @param   {}          req.params
+ * @param   {Object}    res   [res description]
+ * @param   {Function}  next  [next description]
+ *
+ * @return  {Object}        [return description]
  */
 function modifySauce(req, res, next) {
     const sauceObject = req.file ?
@@ -39,7 +64,13 @@ function modifySauce(req, res, next) {
 }
 
 /**
- * supprime une sauce
+ * Supprime une sauce
+ *
+ * @param   {Object}    req   [req description]
+ * @param   {Object}    res   [res description]
+ * @param   {Function}  next  [next description]
+ *
+ * @return  {void}        [return description]
  */
 function deleteSauce(req, res, next) {
     Sauce.deleteOne({ _id: req.params.id })
@@ -49,6 +80,15 @@ function deleteSauce(req, res, next) {
 
 /**
  * récupération du tableau des sauces
+ */
+/**
+ * [async description]
+ *
+ * @param   {Array}     req   [req description]
+ * @param   {Array}     res   [res description]
+ * @param   {Function}  next  [next description]
+ *
+ * @return  {Promise}        [return description]
  */
 async function getAllSauces(req, res, next) {
 
@@ -63,8 +103,29 @@ async function getAllSauces(req, res, next) {
 }
 
 /**
+ * Récupération d'une sauce précise
+ *
+ * @param   {Object}    req   [req description]
+ * @param   {Object}    res   [res description]
+ * @param   {Function}  next  [next description]
+ *
+ * @return  {Promise}        [return description]
+ */
+async function getSauce (req, res, next) {
+
+    try {
+        const oneSauce = await Sauce.findOne({ _id: req.params.id });
+        res.status(200).json(oneSauce);
+    } catch (error) {
+        console.warn(error)
+        res.status(404).json({ error })
+    }
+}
+
+/**
  * récupération d'une sauce précise
  */
+/*
 function getSauce(req, res, next) {
 
     //on utilise findOne pour récupérer une sauce
@@ -76,7 +137,17 @@ function getSauce(req, res, next) {
         //sinon message d'erreur
         .catch(error => res.status(404).json({ error }));
 }
+*/
 
+/**
+ * Ajoute ou supprime un like et un dislike
+ *
+ * @param   {Object}    req   [req description]
+ * @param   {Object}    res   [res description]
+ * @param   {Function}  next  [next description]
+ *
+ * @return  {Promise}        [return description]
+ */
 async function updateLikes(req, res, next) {
     const { userId, like } = req.body;
 
