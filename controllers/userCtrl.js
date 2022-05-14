@@ -15,7 +15,18 @@ const User = require('../models/userModel.js')
  */
 const jsonwt = require('jsonwebtoken');
 
-
+/**
+ * Authentifie l'utilisateur 
+ *
+ * @param   {Object}    req   
+ * @param   {Object}    req.body
+ * @param   {String}    req.body.email
+ * @param   {String}    req.body.password
+ * @param   {Object}    res   [res description]
+ * @param   {Function}  next  [next description]
+ *
+ * @return  {void}        [return description]
+ */
 function login(req,res, next){
 
     //on récupère l'user de la base de donnée qui correspond à l'adresse mail entrée
