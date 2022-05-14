@@ -79,13 +79,10 @@ function deleteSauce(req, res, next) {
 }
 
 /**
- * récupération du tableau des sauces
- */
-/**
- * [async description]
+ * Récupération du tableau des sauces
  *
- * @param   {Array}     req   [req description]
- * @param   {Array}     res   [res description]
+ * @param   {Object}     req   [req description]
+ * @param   {Object}     res   [res description]
  * @param   {Function}  next  [next description]
  *
  * @return  {Promise}        [return description]
