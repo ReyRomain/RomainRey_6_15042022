@@ -1,29 +1,27 @@
 /**
- * l'algorithme bcrypt pour hasher password
+ * L'algorithme bcrypt pour hasher password
  */
 const bcrypt = require('bcrypt');
 
+/**
+ * Utilisation de jsonwebtoken pour donner un token à l'utilisateur au moment de la connexion
+ */
 const jwt = require('jsonwebtoken');
 
 /**
- * récupération du schéma User de mongoose
+ * Récupération du schéma User de mongoose
  */
 const User = require('../models/userModel.js')
 
 /**
- * utilisation de jsonwebtoken pour donner un token à l'User au moment de la connection
- */
-const jsonwt = require('jsonwebtoken');
-
-/**
  * Authentifie l'utilisateur 
  *
- * @param   {Object}    req   
- * @param   {Object}    req.body
- * @param   {String}    req.body.email      récupère l'user de la base de donné qui correspond à l'adresse mail entrée
- * @param   {String}    req.body.password   
- * @param   {Object}    res
- * @param   {Function}  next
+ * @param   {Object}    req                 récupère la requête
+ * @param   {Object}    req.body            récupère le corps de la requête
+ * @param   {String}    req.body.email      récupère l'user de la base de donnée qui correspond à l'adresse mail entrée
+ * @param   {String}    req.body.password   récupère le password hasher de l'user
+ * @param   {Object}    res                 envoie la réponse
+ * @param   {Function}  next                passe à la fonction suivante
  *
  * @return  {void}
  */
@@ -62,12 +60,12 @@ function login(req,res, next){
 /**
  * Création d'un utilisateur
  *
- * @param   {Object}    req   
- * @param   {Object}    req.body
- * @param   {String}    req.body.email
- * @param   {String}    req.body.password
- * @param   {Object}    res
- * @param   {Function}  next
+ * @param   {Object}    req                 récupère la requête
+ * @param   {Object}    req.body            récupère le corps de la requête
+ * @param   {String}    req.body.email      enregistre l'email de l'user dans la base de donnée
+ * @param   {String}    req.body.password   enregistre le password de l'user dans la base de donnée
+ * @param   {Object}    res                 envoie la réponse
+ * @param   {Function}  next                passe à la fonction suivante
  *
  * @return  {Promise}
  */
