@@ -20,16 +20,15 @@ const jsonwt = require('jsonwebtoken');
  *
  * @param   {Object}    req   
  * @param   {Object}    req.body
- * @param   {String}    req.body.email
- * @param   {String}    req.body.password
- * @param   {Object}    res   [res description]
- * @param   {Function}  next  [next description]
+ * @param   {String}    req.body.email      récupère l'user de la base de donné qui correspond à l'adresse mail entrée
+ * @param   {String}    req.body.password   
+ * @param   {Object}    res
+ * @param   {Function}  next
  *
- * @return  {void}        [return description]
+ * @return  {void}
  */
 function login(req,res, next){
 
-    //on récupère l'user de la base de donnée qui correspond à l'adresse mail entrée
     User.findOne({ email: req.body.email })
 
     //si on ne reçoit pas de user, on envoie une erreur
@@ -60,7 +59,19 @@ function login(req,res, next){
     .catch(error => res.status(500).json({ error }));
 }
 
-async function signup(req,res, next){
+/**
+ * Création d'un utilisateur
+ *
+ * @param   {Object}    req   
+ * @param   {Object}    req.body
+ * @param   {String}    req.body.email
+ * @param   {String}    req.body.password
+ * @param   {Object}    res
+ * @param   {Function}  next
+ *
+ * @return  {Promise}
+ */
+async function signup(req, res, next){
     try {
         const {email, password} = req.body;
         if (!email || !password) throw "uncomplete credentials";
