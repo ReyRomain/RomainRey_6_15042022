@@ -1,28 +1,30 @@
 /**
- * récupération du schéma Sauce de mongoose
+ * @typedef  {import('express').Request}      IncomingMessage
+ * @typedef  {import('express').Response}     ServerResponse
+ * @typedef  {import('express').NextFunction} NextFunction
+ * @typedef  {Object} multerImage
+ * @property {Object} file
+ * @property {String} file.filename
+ */
+
+/**
+ * Récupération du schéma Sauce de mongoose
  */
 const Sauce = require('../models/sauceModel.js');
 
 /**
- * permet de récupérer le module 'file system' de Node pour télécharger et modifier les images
+ * Permet de récupérer le module 'file system' de Node pour télécharger et modifier les images
  */
 const fs = require('fs');
-
 
 /**
  * Création d'une sauce
  *
- * @param   {Object}    req                 récupère la requête
- * @param   {Object}    req.body            récupère le corps de la requête
- * @param   {String}    req.body.sauce      récupère la sauce dans le corps de la requête
- * @param   {Function}  req.protocol        applique le protocol pour récupérer la sauce
- * @param   {Function}  req.get             récupère l'user
- * @param   {Object}    req.file            récupère le fichier de l'image
- * @param   {File}      req.file.filename   récupère le nom du fichier
- * @param   {Object}    res                 envoie la réponse
- * @param   {Function}  next                passe à la fonction suivante
+ * @param   {IncomingMessage & multerImage}  req    la requête complétée par une image Multer
+ * @param   {ServerResponse}                 res    la réponse
+ * @param   {NextFunction}                   next   passe à la fonction suivante
  * 
- * @return  {Object}
+ * @return  {void}                             
  */
 function createSauce(req, res, next) {
     const sauceObject = JSON.parse(req.body.sauce);
@@ -39,19 +41,11 @@ function createSauce(req, res, next) {
 /**
  * Modification d'une sauce
  *
- * @param   {Object}    req                 récupère la requête
- * @param   {Object}    req.params          récupère les params
- * @param   {String}    req.params.id       récupère l'id des params selectionné
- * @param   {Object}    req.file            récupère le fichier de l'image
- * @param   {File}      req.file.filename   récupère le nom du fichier
- * @param   {Object}    req.body            récupère le corps de la requête
- * @param   {String}    req.body.sauce      récupère la sauce dans le corps de la requête
- * @param   {Function}  req.protocol        applique le protocol pour récupérer la sauce
- * @param   {Function}  req.get             récupère l'user
- * @param   {Object}    res                 envoie la réponse
- * @param   {Function}  next                passe à la fonction suivante
+ * @param   {IncomingMessage & multerImage}    req    la requête complétée par une image Multer
+ * @param   {ServerResponse}                   res    la réponse
+ * @param   {NextFunction}                     next   passe à la fonction suivante
  *
- * @return  {Object}
+ * @return  {void}                                    envoie une réponse
  */
 function modifySauce(req, res, next) {
     const sauceObject = req.file ?
@@ -67,13 +61,11 @@ function modifySauce(req, res, next) {
 /**
  * Supprime une sauce
  *
- * @param   {Object}    req             récupère la requête
- * @param   {Object}    req.params      récupère les params
- * @param   {String}    req.params.id   récupère l'id des params selectionné
- * @param   {Object}    res             envoie la réponse
- * @param   {Function}  next            passe à la fonction suivante
+ * @param   {IncomingMessage}   req    la requête complétée
+ * @param   {ServerResponse}    res    la réponse
+ * @param   {NextFunction}      next   passe à la fonction suivante
  *
- * @return  {void}
+ * @return  {void}                     envoie une réponse
  */
 function deleteSauce(req, res, next) {
     Sauce.deleteOne({ _id: req.params.id })
@@ -84,11 +76,11 @@ function deleteSauce(req, res, next) {
 /**
  * Récupération du tableau des sauces
  *
- * @param   {Object}     req   récupère la requête
- * @param   {Object}     res   envoie la réponse
- * @param   {Function}   next  passe à la fonction suivante
+ * @param   {IncomingMessage}   req   la requête complétée
+ * @param   {ServerResponse}    res   la réponse
+ * @param   {NextFunction}      next  passe à la fonction suivante
  *
- * @return  {Promise}          retourne la liste des sauces
+ * @return  {Promise}                 retourne la liste des sauces & envoie une réponse
  */
 async function getAllSauces(req, res, next) {
 
@@ -105,13 +97,11 @@ async function getAllSauces(req, res, next) {
 /**
  * Récupération d'une sauce précise
  *
- * @param   {Object}    req             récupère la requête
- * @param   {Object}    req.params      récupère les params
- * @param   {String}    req.params.id   récupère l'id des params selectionné
- * @param   {Object}    res             envoie la réponse
- * @param   {Function}  next            passe à la fonction suivante
+ * @param   {IncomingMessage}   req    la requête complétée
+ * @param   {ServerResponse}    res    la réponse
+ * @param   {NextFunction}      next   passe à la fonction suivante
  *
- * @return  {Promise}                   retourne la sauce selectionné
+ * @return  {Promise}                   retourne la sauce selectionné & envoie une réponse
  */
 async function getSauce (req, res, next) {
 
@@ -125,33 +115,13 @@ async function getSauce (req, res, next) {
 }
 
 /**
- * récupération d'une sauce précise
- */
-/*
-function getSauce(req, res, next) {
-
-    //on utilise findOne pour récupérer une sauce
-    Sauce.findOne({ _id: req.params.id })
-
-        //si true on retourne l'id de la sauce
-        .then(sauce => res.status(200).json(sauce))
-
-        //sinon message d'erreur
-        .catch(error => res.status(404).json({ error }));
-}
-*/
-
-/**
  * Ajoute ou supprime un like et un dislike
  *
- * @param   {Object}    req             récupère la requête
- * @param   {Object}    req.body        récupère le corps de la requête
- * @param   {Object}    req.params      récupère les params
- * @param   {String}    req.params.id   récupère l'id des params selectionné
- * @param   {Object}    res             envoie la réponse
- * @param   {Function}  next            passe à la fonction suivante
+ * @param   {IncomingMessage}   req     la requête complétée
+ * @param   {ServerResponse}    res     la réponse
+ * @param   {NextFunction}      next    passe à la fonction suivante
  *
- * @return  {Promise}                   retourne la modification des likes à l'affichage
+ * @return  {Promise}                   retourne la modification des likes à l'affichage & envoie une réponse
  */
 async function updateLikes(req, res, next) {
     const { userId, like } = req.body;
