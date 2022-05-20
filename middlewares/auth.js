@@ -1,6 +1,3 @@
-/**
- * Récupération de jsonwebtoken
- */
 const jsonwt = require('jsonwebtoken');
 
 /**

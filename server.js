@@ -3,7 +3,7 @@ const http = require('http');
 const app = require('./app');
 
 /**
- * renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
+ * Renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
  *
  * @returns {Boolean | Number | String}
  */
@@ -20,7 +20,7 @@ const normalizePort = val => {
 };
 
 /**
- * ajout PORT de connection pour déclarer l'environnement, sinon on écoutera le PORT 3000
+ * Ajout PORT de connection pour déclarer l'environnement, sinon on écoutera le PORT 3000
  *
  * @var {Number}
  */
@@ -28,7 +28,7 @@ const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * en cas d'erreur arrete le serveur
+ * En cas d'erreur arrete le serveur
  *
  * @throw {Error}
  */
@@ -53,12 +53,12 @@ const errorHandler = error => {
 };
 
 /**
- * création d'un serveur avec Express en utilisant app pour les requêtes et réponses
+ * Création d'un serveur
  */
 const server = http.createServer(app);
 
 /**
- * lance le serveur qui affichera sur quel port se connecter ou s'occupe des erreurs
+ * Lance le serveur qui affichera sur quel port se connecter
  */
 server.on('error', errorHandler);
 server.on('listening', () => {
@@ -67,5 +67,4 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-//le serveur écoute le port qui est définit dans la const port*
 server.listen(port);

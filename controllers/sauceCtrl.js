@@ -2,10 +2,20 @@
  * @typedef  {import('express').Request}      IncomingMessage
  * @typedef  {import('express').Response}     ServerResponse
  * @typedef  {import('express').NextFunction} NextFunction
- * @typedef  {Object} multerImage
- * @property {Object} file
- * @property {String} file.filename
- */
+ * 
+ * @typedef  {import("multer").DiskStorageOptions} multerImage
+ * 
+ * @typedef  {Object} sauceRequest
+ * @property {Object} body            récupère le corps de la requête
+ * @property {String} body.sauce      récupère la sauce dans le corps de la requête
+ * 
+ * @typedef  {Object} likeHandler
+ * @property {Object} body            récupère le corps de la requête
+ * @property {Number} body.userId     récupère l'userId
+ * @property {Number} body.like       récupère le nombre de like
+ * @property {Object} params          récupère les params
+ * @property {Number} params.id       récupère l'id des params selectionné
+*/
 
 /**
  * Récupération du schéma Sauce de mongoose
@@ -13,16 +23,16 @@
 const Sauce = require('../models/sauceModel.js');
 
 /**
- * Permet de récupérer le module 'file system' de Node pour télécharger et modifier les images
+ * Permet de récupérer 'file system' pour télécharger et modifier les images
  */
 const fs = require('fs');
 
 /**
  * Création d'une sauce
  *
- * @param   {IncomingMessage & multerImage}  req    la requête complétée par une image Multer
- * @param   {ServerResponse}                 res    la réponse
- * @param   {NextFunction}                   next   passe à la fonction suivante
+ * @param   {IncomingMessage & multerImage & sauceRequest}  req    la requête complétée par une image Multer
+ * @param   {ServerResponse}                                res    la réponse
+ * @param   {NextFunction}                                  next   passe à la fonction suivante
  * 
  * @return  {void}                             
  */
@@ -41,11 +51,11 @@ function createSauce(req, res, next) {
 /**
  * Modification d'une sauce
  *
- * @param   {IncomingMessage & multerImage}    req    la requête complétée par une image Multer
- * @param   {ServerResponse}                   res    la réponse
- * @param   {NextFunction}                     next   passe à la fonction suivante
+ * @param   {IncomingMessage & multerImage & sauceRequest}  req    la requête complétée par une image Multer
+ * @param   {ServerResponse}                                res    la réponse
+ * @param   {NextFunction}                                  next   passe à la fonction suivante
  *
- * @return  {void}                                    envoie une réponse
+ * @return  {void}                                                 envoie une réponse
  */
 function modifySauce(req, res, next) {
     const sauceObject = req.file ?
@@ -84,7 +94,6 @@ function deleteSauce(req, res, next) {
  */
 async function getAllSauces(req, res, next) {
 
-    //on utilise find pour récupérer le tableau des sauces dans la base de données
     try {
         const sauces = await Sauce.find();
         res.status(200).json(sauces);
@@ -101,7 +110,7 @@ async function getAllSauces(req, res, next) {
  * @param   {ServerResponse}    res    la réponse
  * @param   {NextFunction}      next   passe à la fonction suivante
  *
- * @return  {Promise}                   retourne la sauce selectionné & envoie une réponse
+ * @return  {Promise}                  retourne la sauce selectionnée & envoie une réponse
  */
 async function getSauce (req, res, next) {
 
@@ -117,18 +126,14 @@ async function getSauce (req, res, next) {
 /**
  * Ajoute ou supprime un like et un dislike
  *
- * @param   {IncomingMessage}   req     la requête complétée
- * @param   {ServerResponse}    res     la réponse
- * @param   {NextFunction}      next    passe à la fonction suivante
+ * @param   {IncomingMessage & likeHandler}   req     la requête complétée
+ * @param   {ServerResponse}                  res     la réponse
+ * @param   {NextFunction}                    next    passe à la fonction suivante
  *
- * @return  {Promise}                   retourne la modification des likes à l'affichage & envoie une réponse
+ * @return  {Promise}                                 retourne la modification des likes à l'affichage & envoie une réponse
  */
 async function updateLikes(req, res, next) {
     const { userId, like } = req.body;
-
-    /**
-     * récupération de l'id d'une sauce
-     */
     const sauceId = req.params.id
     let msg, todo;
     try {
@@ -148,10 +153,6 @@ async function updateLikes(req, res, next) {
         }
         if (like === 0) {
             const sauce = await Sauce.findOne({ _id: sauceId })
-
-            /**
-             * annule un like
-             */
             if (sauce.usersLiked.includes(userId)) {
                 todo = {
                     $pull: { usersLiked: userId },
@@ -159,10 +160,6 @@ async function updateLikes(req, res, next) {
                 };
                 msg = "Like retiré";
             }
-
-            /**
-             * annule un dislike
-             */
             if (sauce.usersDisliked.includes(userId)) {
                 todo = {
                     $pull: { usersDisliked: userId },
