@@ -1,18 +1,17 @@
-//const pour utiliser Express
 const express = require('express');
-
-//plugin qui permet de donner accès au chemin de notre système de fichier
 const path = require('path');
-
-//const pour utiliser Mongoose
 const mongoose = require('mongoose');
+
 const userRoute = require("./routes/userRoute");
 const sauceRoute = require("./routes/sauceRoute");
+
 const { default: helmet } = require('helmet');
 
 const app = express();
 
-//le PORT 3000 du backend et le PORT 4200 du frontend pourront communiquer entre eux afin d'éviter les erreurs CORS
+/**
+ * Permet de faire communiquer les ports entre eux afin d'éviter les erreurs CORS
+ */
 if (process.env.MODE === "DEV") {
   app.use((req, res, next) => {
 
@@ -32,15 +31,18 @@ if (process.env.MODE === "DEV") {
 }
 else app.use(helmet());
 
-//express prend toutes les requêtes et met à disposition leur body* (bodyParser)
+/**
+ * BodyParser
+ */
 app.use(express.json());
 
-//middleware qui permet de charger les fichiers qui sont dans le dossier images
+/**
+ * Middleware qui permet de charger les fichiers
+ */
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-
 /**
- * connexion à MongoDB
+ * Connexion à MongoDB
  */
 mongoose.connect(process.env.DB_CONNECT,
   { useNewUrlParser: true, useUnifiedTopology: true })
