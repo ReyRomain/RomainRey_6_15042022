@@ -28,15 +28,17 @@ const destination = (req, file, callback) => {
 const filename = (req, file, callback) => {
 
     /**
-     * on utilise le nom d'origine du fichier et on remplace les espaces par underscore
+     * On utilise le nom d'origine du fichier et on remplace les espaces par underscore
      */
     const name = file.originalname.split(' ').join('_');
 
     /**
-     * création de l'extension de fichier
+     * Création de l'extension de fichier
      */
     const extension = MIME_TYPES[file.mimetype];
-    //création du fileName entier
+    /**
+     * Création du fileName entier
+     */
     callback(null, name + Date.now() + '.' + extension);
 };
 
