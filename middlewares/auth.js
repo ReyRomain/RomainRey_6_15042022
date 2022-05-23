@@ -1,11 +1,17 @@
+/**
+ * @typedef  {import('express').Request}      IncomingMessage
+ * @typedef  {import('express').Response}     ServerResponse
+ * @typedef  {import('express').NextFunction} NextFunction
+*/
+
 const jsonwt = require('jsonwebtoken');
 
 /**
  * Middleware d'authentification
  *
- * @param   {Object}    req   récupère la requête d'authentification
- * @param   {Object}    res   la réponse
- * @param   {Function}  next  passe à la fonction suivante
+ * @param   {IncomingMessage}   req   récupère la requête d'authentification
+ * @param   {ServerResponse}    res   la réponse
+ * @param   {NextFunction}      next  passe à la fonction suivante
  *
  * @return  {void}
  */

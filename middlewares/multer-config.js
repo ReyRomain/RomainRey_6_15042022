@@ -1,9 +1,11 @@
-//importation du package multer
+/**
+ * Package Multer
+ */
 const multer = require('multer');
 const maxSize = 1 * 1000 * 1000; //1Mo
 
 /**
- * dictionnaire pour générer l'extension du fichier
+ * Dictionnaire pour générer l'extension du fichier
  *
  * @type {Object}
  */
@@ -14,26 +16,16 @@ const MIME_TYPES = {
 };
 
 /**
-* explique à multer où enregistrer les fichiers
-*
-* @param   {Request}  req       [req description]
-* @param   {File}     file      [file description]
-* 
-* @callback
+* Explique à multer où enregistrer les fichiers
 */
 const destination = (req, file, callback) => {
    callback(null, 'images');
 }
 
- /**
-     * explique à multer quel nom de fichier utiliser
-     *
-     * @param   {Request}  req       [req description]
-     * @param   {File}     file      [file description]
-     * 
-     * @callback
-     */
-const  filename = (req, file, callback) => {
+/**
+ * Explique à multer quel nom de fichier utiliser
+*/
+const filename = (req, file, callback) => {
 
     /**
      * on utilise le nom d'origine du fichier et on remplace les espaces par underscore
@@ -48,7 +40,11 @@ const  filename = (req, file, callback) => {
     callback(null, name + Date.now() + '.' + extension);
 };
 
-//exportation du middleware multer
+/**
+ * Exportation du Middleware Multer
+ *
+ * @return  {[type]}  [return description]
+ */
 module.exports = multer({
     storage: multer.diskStorage({ destination, filename }),  
     limits: { fileSize: maxSize }
