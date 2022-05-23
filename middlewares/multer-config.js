@@ -42,8 +42,6 @@ const filename = (req, file, callback) => {
 
 /**
  * Exportation du Middleware Multer
- *
- * @return  {[type]}  [return description]
  */
 module.exports = multer({
     storage: multer.diskStorage({ destination, filename }),  
