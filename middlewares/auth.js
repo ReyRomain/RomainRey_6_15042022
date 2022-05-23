@@ -3,9 +3,9 @@ const jsonwt = require('jsonwebtoken');
 /**
  * Middleware d'authentification
  *
- * @param   {Object}    req   [req description]
- * @param   {Object}    res   [res description]
- * @param   {Function}  next  [next description]
+ * @param   {Object}    req   récupère la requête d'authentification
+ * @param   {Object}    res   la réponse
+ * @param   {Function}  next  passe à la fonction suivante
  *
  * @return  {void}
  */
